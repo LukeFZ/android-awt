@@ -42,6 +42,8 @@ typedef struct {
 } ImageFormat;
 ////////////////////
 
+JNIEXPORT void JNICALL Java_org_apache_harmony_awt_gl_color_NativeImageFormat_initIDs(JNIEnv *env, jclass cls);
+
 ImageFormat* getImageFormat(JNIEnv* env, jobject jimft);
 void releaseImageFormat(JNIEnv* env, ImageFormat* imft);
 

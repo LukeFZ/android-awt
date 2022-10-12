@@ -30,6 +30,44 @@ jfieldID clr_NIF_imageDataID;
 jfieldID clr_NIF_dataOffsetID;
 jfieldID clr_NIF_alphaOffsetID;
 
+JNIEXPORT void JNICALL Java_org_apache_harmony_awt_gl_color_NativeImageFormat_initIDs(JNIEnv *env, jclass cls) {
+
+    clr_NIF_cmmFormatID = (*env)->GetFieldID(env, cls, "cmmFormat", "I");
+    if(clr_NIF_cmmFormatID == NULL) {
+        throwNPException(env, "Unable to get field ID");
+    }
+
+    clr_NIF_colsID = (*env)->GetFieldID(env, cls, "cols", "I");
+    if(clr_NIF_colsID == NULL) {
+        throwNPException(env, "Unable to get field ID");
+    }
+
+    clr_NIF_rowsID = (*env)->GetFieldID(env, cls, "rows", "I");
+    if(clr_NIF_rowsID == NULL) {
+        throwNPException(env, "Unable to get field ID");
+    }
+
+    clr_NIF_scanlineStrideID = (*env)->GetFieldID(env, cls, "scanlineStride", "I");
+    if(clr_NIF_scanlineStrideID == NULL) {
+        throwNPException(env, "Unable to get field ID");
+    }
+
+    clr_NIF_imageDataID = (*env)->GetFieldID(env, cls, "imageData", "Ljava/lang/Object;");
+    if(clr_NIF_imageDataID == NULL) {
+        throwNPException(env, "Unable to get field ID");
+    }
+
+    clr_NIF_dataOffsetID = (*env)->GetFieldID(env, cls, "dataOffset", "I");
+    if(clr_NIF_dataOffsetID == NULL) {
+        throwNPException(env, "Unable to get field ID");
+    }
+
+    clr_NIF_alphaOffsetID = (*env)->GetFieldID(env, cls, "alphaOffset", "I");
+    if(clr_NIF_alphaOffsetID == NULL) {
+        throwNPException(env, "Unable to get field ID");
+    }
+}
+
 ImageFormat* getImageFormat(JNIEnv* env, jobject jimft) {
     // Create the structure.
     ImageFormat *imft = malloc(sizeof(ImageFormat));

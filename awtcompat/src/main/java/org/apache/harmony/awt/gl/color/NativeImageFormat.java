@@ -111,6 +111,8 @@ public class NativeImageFormat {
     // Has the image alpha channel? If has - here its band band offset goes
     private int alphaOffset = -1;
 
+    public native static void initIDs();
+
     ////////////////////////////////////
     // LCMS image format encoders
     ////////////////////////////////////

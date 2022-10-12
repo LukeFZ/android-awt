@@ -20,6 +20,7 @@ public class AwtCompatNativeComponents
                     public Void run()
                     {
                         System.loadLibrary("awtcompat-native-components");
+                        NativeImageFormat.initIDs();
                         isLibraryLoaded.set(true);
                         return null;
                     }
