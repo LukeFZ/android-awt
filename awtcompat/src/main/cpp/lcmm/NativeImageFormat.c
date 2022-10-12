@@ -68,25 +68,30 @@ JNIEXPORT void JNICALL Java_org_apache_harmony_awt_gl_color_NativeImageFormat_in
     }
 }
 
-ImageFormat* getImageFormat(JNIEnv* env, jobject jimft) {
+ImageFormat* initImageFormat(JNIEnv* env, jobject jimft) {
     // Create the structure.
     ImageFormat *imft = malloc(sizeof(ImageFormat));
 
-  imft->cmmFormat = (int) (*env)->GetIntField(env, jimft, clr_NIF_cmmFormatID);
+    imft->cmmFormat = (int) (*env)->GetIntField(env, jimft, clr_NIF_cmmFormatID);
     imft->cols = (int) (*env)->GetIntField(env, jimft, clr_NIF_colsID);
     imft->rows = (int) (*env)->GetIntField(env, jimft, clr_NIF_rowsID);
     imft->scanlineStride = (int) (*env)->GetIntField(env, jimft, clr_NIF_scanlineStrideID);
-  imft->dataOffset = (int) (*env)->GetIntField(env, jimft, clr_NIF_dataOffsetID);
-  imft->alphaOffset = (int) (*env)->GetIntField(env, jimft, clr_NIF_alphaOffsetID);
+    imft->dataOffset = (int) (*env)->GetIntField(env, jimft, clr_NIF_dataOffsetID);
+    imft->alphaOffset = (int) (*env)->GetIntField(env, jimft, clr_NIF_alphaOffsetID);
 
-    // Get image data
-  imft->jImageData = (jarray) (*env)->GetObjectField(env, jimft, clr_NIF_imageDataID);
+    imft->jImageData = (jarray) (*env)->GetObjectField(env, jimft, clr_NIF_imageDataID);
+
+    return imft;
+}
+
+ImageFormat* populateImageFormat(JNIEnv* env, jobject jimft, ImageFormat* imft) {
     imft->imageData = (BYTE*) (*env)->GetPrimitiveArrayCritical(env, imft->jImageData, 0);
 
-  if(imft->imageData == NULL) { // All is lost, we don't have C array
-      throwNPException(env, "Error while accessing java image data");
-      // Free resources and stop further processing...
+    if(imft->imageData == NULL) { // All is lost, we don't have C array
+        // Free resources and stop further processing...
         releaseImageFormat(env, imft);
+
+        throwNPException(env, "Error while accessing java image data");
         return NULL;
     }
 

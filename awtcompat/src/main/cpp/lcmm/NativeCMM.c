@@ -367,8 +367,11 @@ static void copyAlphaChannel(
     cmsHTRANSFORM xform = (cmsHTRANSFORM) (transformHandle);
 
 
-    srcFormat = getImageFormat(env, src);
-    dstFormat = getImageFormat(env, dst);
+    srcFormat = initImageFormat(env, src);
+    dstFormat = initImageFormat(env, dst);
+
+    srcFormat = populateImageFormat(env, src, srcFormat);
+    dstFormat = populateImageFormat(env, src, dstFormat);
 
   // Do we have to copy alpha?
   copyAlpha = srcFormat->alphaOffset >= 0 && dstFormat->alphaOffset >= 0;
